@@ -1,0 +1,45 @@
+{
+    "_comment": "Takes an existing arch box and provisions it with ansible.",
+    "builders": [{
+        "type": "virtualbox-ovf",
+
+        "source_path": "C:/Users/Alexandre/Documents/ovf-box/packer-archlinux-base.ovf",
+
+        "vm_name": "packer-arch-ansible",
+
+        "headless": "false",
+        "guest_additions_mode": "disable",
+
+        "boot_wait": "5s",
+        "boot_command": [
+            "<enter>"
+        ],
+
+        "ssh_username": "vagrant",
+        "ssh_password": "vagrant",
+        "ssh_timeout": "1h",
+
+        "shutdown_command": "sudo systemctl poweroff"
+    }],
+
+    "provisioners": [{
+        "type": "ansible-local",
+        "extra_arguments": ["-vvv"],
+        "playbook_file": "ansible/virtual-machine.yml",
+        "playbook_dir": "ansible",
+        "inventory_file": "ansible/inventory",
+        "role_paths": [
+            "ansible/roles/system",
+            "ansible/roles/user",
+            "ansible/roles/development",
+            "ansible/roles/desktop",
+            "ansible/roles/vagrant"
+        ]
+    }],
+
+    "post-processors": [{
+        "type": "vagrant",
+        "compression_level": 0,
+        "output": "C:/Users/Alexandre/Documents/packer-ansible/archlinux.box"
+    }]
+}

@@ -1,0 +1,40 @@
+{
+    "_comment": "Creates a basic archlinux box with the bare minimum needed.",
+    "builders": [{
+        "type": "virtualbox-iso",
+        "guest_os_type": "ArchLinux_64",
+
+        "iso_url": "http://ftp.iinet.net.au/pub/archlinux/iso/2016.06.01/archlinux-2016.06.01-dual.iso", 
+        "iso_checksum": "5e755859c18ef9bf7b583a9f4f5c0a30120a56df",
+        "iso_checksum_type": "sha1", 
+
+        "output_directory": "C:/Users/Alexandre/Documents/ovf-box",
+        "vm_name": "packer-archlinux-base",
+        "disk_size": "20000",
+
+        "headless": "false",
+        "http_directory": "http",
+        
+        "guest_additions_mode": "disable",
+
+        "boot_wait": "5s",
+        "boot_command": [
+            "<enter><wait10><wait10>",
+            "/usr/bin/curl -sfSLO http://{{ .HTTPIP }}:{{ .HTTPPort }}/install.sh<enter><wait>",
+            "/usr/bin/curl -sfSLO http://{{ .HTTPIP }}:{{ .HTTPPort }}/chroot.sh<enter><wait>",
+            "/usr/bin/curl -sfSLO http://{{ .HTTPIP }}:{{ .HTTPPort }}/partition.sh<enter><wait>",
+            "/bin/sh ./install.sh<enter>"
+        ],
+
+        "ssh_username": "vagrant",
+        "ssh_password": "vagrant",
+        "ssh_timeout": "1h",
+
+        "shutdown_command": "sudo systemctl poweroff"
+    }],
+
+    "provisioners": [{
+        "type": "shell",
+        "inline": ["sudo pacman --sync --noconfirm --needed ansible"]
+    }]
+}
