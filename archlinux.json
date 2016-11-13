@@ -4,15 +4,11 @@
         "type": "virtualbox-iso",
         "guest_os_type": "ArchLinux_64",
 
-        "iso_url": "http://ftp.iinet.net.au/pub/archlinux/iso/2016.06.01/archlinux-2016.06.01-dual.iso", 
-        "iso_checksum": "5e755859c18ef9bf7b583a9f4f5c0a30120a56df",
+        "iso_url": "http://ftp.iinet.net.au/pub/archlinux/iso/2016.11.01/archlinux-2016.11.01-dual.iso", 
+        "iso_checksum": "5f7ceacd97d730a007ef277847713c6031b632ec",
         "iso_checksum_type": "sha1", 
 
-        "output_directory": "C:/Users/Alexandre/Documents/ovf-box",
-        "vm_name": "packer-archlinux-base",
-        "disk_size": "20000",
-
-        "headless": "false",
+        "headless": true,
         "http_directory": "http",
         
         "guest_additions_mode": "disable",
@@ -36,5 +32,25 @@
     "provisioners": [{
         "type": "shell",
         "inline": ["sudo pacman --sync --noconfirm --needed ansible"]
+    }, {
+        "type": "ansible-local",
+        "extra_arguments": ["-vvv"],
+        "playbook_file": "ansible/virtual-machine.yml",
+        "playbook_dir": "ansible",
+        "inventory_file": "ansible/inventory",
+        "role_paths": [
+            "ansible/roles/system",
+            "ansible/roles/user",
+            "ansible/roles/development",
+            "ansible/roles/desktop",
+            "ansible/roles/vagrant"
+        ]
+    }],
+
+    "post-processors": [{
+        "type": "vagrant",
+        "compression_level": 0,
+        "output": "C:/Users/Alexandre/Documents/packer/archlinux.box"
     }]
+    
 }
