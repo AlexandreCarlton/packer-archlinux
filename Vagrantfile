@@ -9,8 +9,6 @@ Vagrant.configure(2) do |config|
 
   config.vm.box = "archlinux"
 
-  # config.vm.synced_folder ".", "/vagrant", type: "nfs"
-
   if Vagrant.has_plugin?("vagrant-cachier")
     config.cache.auto_detect = false
   end
