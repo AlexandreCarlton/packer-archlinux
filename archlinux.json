@@ -1,5 +1,4 @@
 {
-    "_comment": "Creates a basic archlinux box with the bare minimum needed.",
     "builders": [{
         "type": "virtualbox-iso",
         "guest_os_type": "ArchLinux_64",
@@ -18,6 +17,7 @@
             "<enter><wait10><wait10>",
             "/usr/bin/curl -sfSLO http://{{ .HTTPIP }}:{{ .HTTPPort }}/install.sh<enter><wait>",
             "/usr/bin/curl -sfSLO http://{{ .HTTPIP }}:{{ .HTTPPort }}/chroot.sh<enter><wait>",
+            "/usr/bin/curl -sfSLO http://{{ .HTTPIP }}:{{ .HTTPPort }}/packer.sh<enter><wait>",
             "/usr/bin/curl -sfSLO http://{{ .HTTPIP }}:{{ .HTTPPort }}/partition.sh<enter><wait>",
             "/bin/sh ./install.sh<enter>"
         ],

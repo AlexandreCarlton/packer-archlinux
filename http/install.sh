@@ -25,6 +25,7 @@ pacstrap /mnt base base-devel
 genfstab -t UUID /mnt >> /mnt/etc/fstab
 
 arch-chroot /mnt /bin/bash < ./chroot.sh
+arch-chroot /mnt /bin/bash < ./packer.sh
 
 umount -R /mnt
 sudo systemctl reboot
