@@ -1,25 +1,7 @@
 #!/bin/sh
 set -e 
 set -x
-# Bare minimum to get Arch up and running.
-# Anything that can be done in ansible should be omitted here.
-# This includes any configuration that differs to what is done here.
 
-# Locale handled by Ansible.
-sed --in-place "s/#\(en_US.UTF-8 UTF-8\)/\1/" /etc/locale.gen
-systemd-firstboot --locale='en_US.UTF-8'
-export LANG='en_US.UTF-8'
-locale-gen
-
-
-# Set timezone
-systemd-firstboot --timezone='Australia/Sydney'
-
-# Hostname handled by Ansible
-systemd-firstboot --hostname='flygon'
-
-# Mkinitcpio
-# We can get a template/file to copy across.
 mkinitcpio -p linux
 
 
