@@ -17,6 +17,13 @@ Vagrant.configure(2) do |config|
     vb.gui = true
     vb.cpus = 2
     vb.memory = 2048
+    if Gem.win_platform?
+      vb.customize [
+        "modifyvm", :id,
+         '--audio', 'dsound',
+         '--audiocontroller', 'ac97'
+      ]
+    end
   end
 
 end
