@@ -50,7 +50,8 @@
     "post-processors": [{
         "type": "vagrant",
         "compression_level": 0,
-        "output": "C:/Users/Alexandre/Documents/packer/archlinux.box"
+        "output": "build/archlinux.box",
+        "vagrantfile_template": "Vagrantfile.template"
     }]
     
 }
