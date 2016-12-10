@@ -34,7 +34,6 @@
         "inline": ["sudo pacman --sync --noconfirm --needed ansible"]
     }, {
         "type": "ansible-local",
-        "extra_arguments": ["-vvv"],
         "playbook_file": "ansible/virtual-machine.yml",
         "playbook_dir": "ansible",
         "inventory_file": "ansible/inventory",
