@@ -50,7 +50,7 @@
         "type": "vagrant",
         "compression_level": 0,
         "output": "build/archlinux.box",
-        "vagrantfile_template": "Vagrantfile.template"
+        "vagrantfile_template": "Vagrantfile"
     }]
 
 }
