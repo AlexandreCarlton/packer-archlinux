@@ -1,5 +1,7 @@
 # packer-archlinux
 
+[![Build status](https://ci.appveyor.com/api/projects/status/s7tcpanctduykfpn/branch/master?svg=true)](https://ci.appveyor.com/project/AlexandreCarlton/packer-archlinux/branch/master)
+
 Packer template to deploy and provision my Arch Linux setup.
 
 Downloading an iso sticks it in PACKER_CACHE_DIR, under in common/step_download.go:75
