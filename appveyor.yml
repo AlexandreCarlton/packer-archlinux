@@ -8,7 +8,6 @@ cache:
 install:
   - git submodule update --init --recursive
   - cinst packer
-  - ps: cinst vagrant
   - cinst virtualbox
 
 build_script:
