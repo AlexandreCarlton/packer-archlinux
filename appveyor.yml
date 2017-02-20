@@ -1,0 +1,17 @@
+version: 1.0.{build}
+
+cache:
+  - packer_cache
+  - C:\ProgramData\chocolatey\bin
+  - C:\ProgramData\chocolatey\lib
+
+install:
+  - cinst: packer
+  - cinst: vagrant
+  - cinst: virtualbox
+
+before_build:
+  - packer validate archlinux.json
+
+build_script:
+  - packer build archlinux.json
