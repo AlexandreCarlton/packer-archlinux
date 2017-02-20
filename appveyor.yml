@@ -11,4 +11,5 @@ install:
   - cinst virtualbox
 
 build_script:
+  - refreshenv
   - packer build archlinux.json
