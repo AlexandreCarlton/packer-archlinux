@@ -10,8 +10,5 @@ install:
   - cinst: vagrant
   - cinst: virtualbox
 
-before_build:
-  - packer validate archlinux.json
-
 build_script:
   - packer build archlinux.json
