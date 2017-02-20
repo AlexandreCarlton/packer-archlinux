@@ -7,9 +7,9 @@ cache:
 
 install:
   - git submodule update --init --recursive
-  - cinst: packer
-  - cinst: vagrant
-  - cinst: virtualbox
+  - cinst packer
+  - cinst vagrant
+  - cinst virtualbox
 
 build_script:
   - packer build archlinux.json
