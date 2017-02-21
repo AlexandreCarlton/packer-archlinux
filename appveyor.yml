@@ -9,7 +9,8 @@ install:
   - git submodule update --init --recursive
   - cinst packer
   - cinst virtualbox
+  - refreshenv
+  - set
 
 build_script:
-  - refreshenv
   - packer build archlinux.json
