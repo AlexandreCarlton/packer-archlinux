@@ -11,6 +11,9 @@ set -x # Show what we're executing
 # Ensure system clock is accurate.
 timedatectl set-ntp true
 
+# Force synchronisation of package database (so we can install reflector)
+pacman --sync --refresh --refresh
+
 # Generate a list of the fastest mirrors (takes about a minute)
 # Pacstrap copies this across into our new installation.
 pacman --sync reflector
