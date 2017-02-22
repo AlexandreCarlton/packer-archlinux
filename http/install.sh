@@ -3,8 +3,6 @@
 # Script used to set up a base environment before provisioning with ansible
 # Also configures for vagrant use (which could be done with ansible but we'll see)
 
-# Later this will be broken up into 
-
 set -e # Stop on first error
 set -x # Show what we're executing
 
@@ -16,7 +14,7 @@ pacman --sync --refresh --refresh
 
 # Generate a list of the fastest mirrors (takes about a minute)
 # Pacstrap copies this across into our new installation.
-pacman --sync reflector
+pacman --sync --noconfirm reflector
 reflector --protocol https --number 20 --sort rate --save /etc/pacman.d/mirrorlist
 
 /bin/sh ./partition.sh
