@@ -11,10 +11,10 @@ set -x # Show what we're executing
 # Ensure system clock is accurate.
 timedatectl set-ntp true
 
-# Enable our preferred server.
-echo 'Server = http://ftp.iinet.net.au/pub/archlinux/$repo/os/$arch' > /etc/pacman.d/mirrorlist
-echo 'Server = http://ftp.iinet.net.au/pub/archlinux/$repo/os/$arch' >> /etc/pacman.d/mirrorlist
-echo 'Server = http://ftp.iinet.net.au/pub/archlinux/$repo/os/$arch' >> /etc/pacman.d/mirrorlist
+# Generate a list of the fastest mirrors (takes about a minute)
+# Pacstrap copies this across into our new installation.
+pacman --sync reflector
+reflector --protocol https --number 20 --sort rate --save /etc/pacman.d/mirrorlist
 
 /bin/sh ./partition.sh
 
