@@ -3,7 +3,7 @@
         "type": "virtualbox-iso",
         "guest_os_type": "ArchLinux_64",
 
-        "iso_url": "http://ftp.iinet.net.au/pub/archlinux/iso/2017.02.01/archlinux-2017.02.01-dual.iso",
+        "iso_url": "https://mirrors.kernel.org/archlinux/iso/2017.02.01/archlinux-2017.02.01-dual.iso",
         "iso_checksum": "7798b65ae8842768bd2ff068545e0a3fc2dd0140",
         "iso_checksum_type": "sha1",
 
