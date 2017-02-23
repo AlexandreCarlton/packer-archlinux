@@ -12,6 +12,10 @@
 
         "guest_additions_mode": "disable",
 
+        "vboxmanage": [
+            ["modifyvm", "{{.Name}}", "--nictype1", "Am79C973"]
+        ],
+
         "boot_wait": "5s",
         "boot_command": [
             "<enter><wait10><wait10>",
