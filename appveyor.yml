@@ -18,4 +18,5 @@ install:
 
 build_script:
   - set PACKER_CACHE_DIR=%cd%\packer_cache
-  - packer build -var arch=32 archlinux.json
+  # Use 32-bit because AppVeyor doesn't (yet) support 64-bit guests.
+  - packer build -var arch= archlinux.json

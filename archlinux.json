@@ -1,7 +1,7 @@
 {
     "builders": [{
         "type": "virtualbox-iso",
-        "guest_os_type": "ArchLinux_{{user `arch`}}",
+        "guest_os_type": "ArchLinux{{user `arch`}}",
 
         "iso_url": "http://mirror.rackspace.com/archlinux/iso/2017.02.01/archlinux-2017.02.01-dual.iso",
         "iso_checksum": "7798b65ae8842768bd2ff068545e0a3fc2dd0140",
@@ -59,6 +59,6 @@
     }],
 
     "variables": {
-        "arch": "64"
+        "arch": "_64"
     }
 }
