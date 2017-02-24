@@ -5,6 +5,10 @@ cache:
   - C:\ProgramData\chocolatey\bin
   - C:\ProgramData\chocolatey\lib
 
+# Display RDP info in case we need to debug the build
+init:
+  - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+
 install:
   - git submodule update --init --recursive
   - cinst packer

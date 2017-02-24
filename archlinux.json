@@ -7,7 +7,7 @@
         "iso_checksum": "7798b65ae8842768bd2ff068545e0a3fc2dd0140",
         "iso_checksum_type": "sha1",
 
-        "headless": true,
+        "headless": false,
         "http_directory": "http",
 
         "guest_additions_mode": "disable",
@@ -38,6 +38,7 @@
         "inline": ["sudo pacman --sync --noconfirm --needed ansible"]
     }, {
         "type": "ansible-local",
+        "extra_arguments": ["-v"],
         "playbook_file": "ansible/virtual-machine.yml",
         "playbook_dir": "ansible",
         "inventory_file": "ansible/inventory",
