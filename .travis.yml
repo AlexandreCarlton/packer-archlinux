@@ -13,8 +13,8 @@ env:
 
 install:
   - mkdir -p "${HOME}/.local/bin"
-  #- wget --no-check-certificate "https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip"
-  #- unzip packer_${PACKER_VERSION}_linux_amd64.zip -d "${HOME}/.local/bin"
+  - wget --no-check-certificate "https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip"
+  - unzip packer_${PACKER_VERSION}_linux_amd64.zip -d "${HOME}/.local/bin"
   - which packer
 
 script:
