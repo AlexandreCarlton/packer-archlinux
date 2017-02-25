@@ -9,7 +9,7 @@ init:
   # Display RDP info in case we need to debug the build
   - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
   # Disable Hyper-V (enable detection of 64-bit guests)
-  - dism.exe /Online /Disable-Feature:Microsoft-Hyper-V
+  - ps: Remove-WindowsFeature -Name Hyper-V
 
 install:
   - git submodule update --init --recursive
