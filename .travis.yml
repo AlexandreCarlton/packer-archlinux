@@ -23,8 +23,10 @@ script:
 addons:
   apt:
     packages:
+      - linux-headers-generic
       - unzip
       - virtualbox
+      - virtualbox-dkms
       - virtualbox-guest-additions-iso
       - virtualbox-guest-utils
       - wget
