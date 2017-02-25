@@ -23,7 +23,5 @@ addons:
       - virtualbox
       - virtualbox-guest-additions-iso
       - virtualbox-guest-dkms
-      - virtualbox-guest-modules
-      - virtualbox-guest-source
       - virtualbox-guest-utils
       - wget
