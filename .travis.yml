@@ -1,7 +1,7 @@
 
 # Use 14.04 because 12.04's wget (or curl) doesn't seem to work
 dist: trusty
-sudo: required
+sudo: false
 
 language: generic
 
