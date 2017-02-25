@@ -11,7 +11,7 @@ env:
     - PACKER_VERSION='0.12.2'
     - PACKER_CACHE_DIR="${HOME}/.cache"
 
-- before_install:
+before_install:
   - uname -a
 
 install:
@@ -27,7 +27,7 @@ addons:
   apt:
     packages:
       - linux-headers-3.13.0-100-generic # Specific to 14.04 (uname -r)
-      - linux-headers-4.4.0-51-generic # Also needed
+      - linux-headers-4.4.0-51-generic # Also needed for the sudo builder.
       - linux-headers-generic
       - unzip
       - virtualbox
