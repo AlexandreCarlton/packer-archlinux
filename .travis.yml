@@ -21,6 +21,6 @@ addons:
     packages:
       - unzip
       - virtualbox
-      - virtualbox-guest-additions
       - virtualbox-guest-additions-iso
+      - virtualbox-guest-utils # additions in 12.04
       - wget
