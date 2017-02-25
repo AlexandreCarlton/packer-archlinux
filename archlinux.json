@@ -22,6 +22,10 @@
             "/bin/sh ./install.sh<enter>"
         ],
 
+        "vboxmanage": [
+            ["modifyvm", "{{.Name}}", "--nictype1", "Am79C973"]
+        ],
+
         "ssh_username": "vagrant",
         "ssh_password": "vagrant",
         "ssh_timeout": "20m",
