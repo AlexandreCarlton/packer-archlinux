@@ -1,7 +1,7 @@
 {
     "builders": [{
         "type": "virtualbox-iso",
-        "guest_os_type": "ArchLinux{{user `arch`}}",
+        "guest_os_type": "ArchLinux_64",
 
         "iso_url": "http://mirror.rackspace.com/archlinux/iso/2017.02.01/archlinux-2017.02.01-dual.iso",
         "iso_checksum": "7798b65ae8842768bd2ff068545e0a3fc2dd0140",
@@ -11,10 +11,6 @@
         "http_directory": "http",
 
         "guest_additions_mode": "disable",
-
-        "vboxmanage": [
-            ["modifyvm", "{{.Name}}", "--nictype1", "Am79C973"]
-        ],
 
         "boot_wait": "5s",
         "boot_command": [
@@ -56,9 +52,5 @@
         "compression_level": 0,
         "output": "build/archlinux.box",
         "vagrantfile_template": "Vagrantfile"
-    }],
-
-    "variables": {
-        "arch": "_64"
-    }
+    }]
 }
