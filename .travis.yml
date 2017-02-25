@@ -11,9 +11,6 @@ env:
     - PACKER_VERSION='0.12.2'
     - PACKER_CACHE_DIR="${HOME}/.cache"
 
-before_install:
-  - uname -a
-
 install:
   - mkdir -p "${HOME}/.local/bin"
   - wget --no-check-certificate "https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip"
@@ -27,7 +24,8 @@ addons:
   apt:
     packages:
       - linux-headers-3.13.0-100-generic # Specific to 14.04 (uname -r)
-      - linux-headers-4.4.0-51-generic # Also needed for the sudo builder.
+      - linux-headers-4.4.0-45-generic # Needed for the docker container worker.
+      - linux-headers-4.4.0-51-generic # Also needed for the fully-virtualised worker.
       - linux-headers-generic
       - unzip
       - virtualbox
