@@ -4,7 +4,7 @@ env:
     - PACKER_VERSION=0.12.2
 
 install:
-  - curl --location --remote-name https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip
+  - wget --no-check-certificate "https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip"
   - unzip packer_${PACKER_VERSION}_linux_amd64.zip
 
 script:
@@ -17,3 +17,4 @@ addons:
       - virtualbox
       - virtualbox-guest-additions
       - virtualbox-guest-additions-iso
+      - wget
