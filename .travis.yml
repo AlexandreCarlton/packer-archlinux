@@ -1,11 +1,17 @@
 
+# Use 14.04 because 12.04's wget (or curl) doesn't seem to work
+dist: trusty
+sudo: false
+
 env:
   global:
     - PACKER_VERSION=0.12.2
 
 install:
-  - wget --no-check-certificate --without-ssl "https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip"
-  - unzip packer_${PACKER_VERSION}_linux_amd64.zip
+  - mkdir -p "${HOME}/.local/bin"
+  - wget --no-check-certificate "https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip"
+  - unzip packer_${PACKER_VERSION}_linux_amd64.zip -d "${HOME}/.local/bin"
+  - which packer
 
 script:
   - packer build archlinux.json
