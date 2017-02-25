@@ -7,7 +7,7 @@
         "iso_checksum": "7798b65ae8842768bd2ff068545e0a3fc2dd0140",
         "iso_checksum_type": "sha1",
 
-        "headless": false,
+        "headless": true,
         "http_directory": "http",
 
         "guest_additions_mode": "disable",
