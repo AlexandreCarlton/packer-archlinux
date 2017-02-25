@@ -5,9 +5,11 @@ cache:
   - C:\ProgramData\chocolatey\bin
   - C:\ProgramData\chocolatey\lib
 
-# Display RDP info in case we need to debug the build
 init:
+  # Display RDP info in case we need to debug the build
   - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+  # Disable Hyper-V (enable detection of 64-bit guests)
+  - dism.exe /Online /Disable-Feature:Microsoft-Hyper-V
 
 install:
   - git submodule update --init --recursive
@@ -19,4 +21,4 @@ install:
 build_script:
   - set PACKER_CACHE_DIR=%cd%\packer_cache
   # Use 32-bit because AppVeyor doesn't (yet) support 64-bit guests.
-  - packer build -var arch= archlinux.json
+  - packer build archlinux.json
