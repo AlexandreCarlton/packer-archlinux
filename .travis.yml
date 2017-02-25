@@ -23,6 +23,5 @@ addons:
       - unzip
       - virtualbox
       - virtualbox-guest-additions-iso
-      - virtualbox-guest-dkms
       - virtualbox-guest-utils
       - wget
