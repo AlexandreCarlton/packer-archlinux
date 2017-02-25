@@ -31,5 +31,6 @@ addons:
       - virtualbox-dkms
       - virtualbox-guest-additions-iso
       - virtualbox-guest-utils
+      - virtualbox-guest-x11
       - virtualbox-qt # Needed in case we need to launch a GUI for whatever reason.
       - wget
