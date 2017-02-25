@@ -11,6 +11,9 @@ env:
     - PACKER_VERSION='0.12.2'
     - PACKER_CACHE_DIR="${HOME}/.cache"
 
+- before_install:
+  - uname -a
+
 install:
   - mkdir -p "${HOME}/.local/bin"
   - wget --no-check-certificate "https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER_VERSION}_linux_amd64.zip"
