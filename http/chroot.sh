@@ -23,4 +23,7 @@ pacman --sync --noconfirm syslinux gptfdisk
 syslinux-install_update -i -a -m
 sed --in-place 's|root=/dev/sda3|cryptdevice=/dev/sda2:cryptroot root=/dev/mapper/cryptroot|' /boot/syslinux/syslinux.cfg
 
+# If we were in UEFI we'd do:
+# bootctl --path=/boot install
+# sed --in-place 's|^options.*|options cryptdevice=/dev/sda2:cryptroot root=/dev/mapper/cryptroot rw|' /boot/loader/entries/arch.conf
 pacman --remove --cascade --recursive --nosave --noconfirm gptfdisk

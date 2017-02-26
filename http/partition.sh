@@ -8,7 +8,7 @@ DEVICE='/dev/sda'
 boot_partition="${DEVICE}1"
 root_partition="${DEVICE}2"
 
-# Note we are doing this for a BIOS system; for UEFI we'd have mkpart ESP fat32
+# Note we are doing this for a BIOS system; for UEFI we'd have "mkpart ESP fat32"
 parted "${DEVICE}" --script mklabel gpt
 parted "${DEVICE}" --script --align=optimal mkpart primary ext2 1MiB 257MiB
 parted "${DEVICE}" --script set 1 boot on
@@ -21,6 +21,8 @@ printf 'password' | cryptsetup luksFormat "${root_partition}"
 # cryptroot is the label by which we reference the encrypted partition.
 printf 'password' | cryptsetup open "${root_partition}" cryptroot
 
+# If UEFI we'd use
+# mkfs.fat -F 32 -n 'boot' "${boot_partition}"
 mkfs.ext2 -L 'boot' "${boot_partition}"
 mkfs.ext4 -L 'root' /dev/mapper/cryptroot
 
