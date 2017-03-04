@@ -25,7 +25,10 @@ pacstrap /mnt base base-devel
 genfstab -t LABEL /mnt >> /mnt/etc/fstab
 
 arch-chroot /mnt /bin/bash < ./chroot.sh
-arch-chroot /mnt /bin/bash < ./packer.sh
+
+if greq --quiet 'hypervisor' /proc/cpuinfo; then
+  arch-chroot /mnt /bin/bash < ./packer.sh
+fi
 
 umount -R /mnt
 sudo systemctl reboot
