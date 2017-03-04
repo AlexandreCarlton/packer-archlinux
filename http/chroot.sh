@@ -6,17 +6,19 @@ set -x
 # This is so that packer can complete a build and still have encryption ready.
 # It is the default key for crypt and so does not need to be specified in syslinux.cfg.
 # We'll have to remove this later.
-printf 'password' > /crypto_keyfile.bin
-printf 'password' | cryptsetup luksAddKey /dev/sda2 /crypto_keyfile.bin
+if greq --quiet 'hypervisor' /proc/cpuinfo; then
+  printf 'password' > /crypto_keyfile.bin
+  printf 'password' | cryptsetup luksAddKey /dev/sda2 /crypto_keyfile.bin
+  sed --in-place 's|FILES=""|FILES="/crypto_keyfile.bin"|' /etc/mkinitcpio.conf
+fi
+
 # Insert encrypt hook, and place keyboard hook before this (so that we can type the password)
 # We don't need keymap because we're not using a foreign keyboard layout.
 # This will be replaced by Ansible's mkinitcpio.conf
-sed --in-place 's|FILES=""|FILES="/crypto_keyfile.bin"|' /etc/mkinitcpio.conf
 sed --in-place 's/block filesystems keyboard/keyboard block encrypt filesystems/' /etc/mkinitcpio.conf
 # mkinitcpio complains that fsck.btrfs without this.
 pacman --sync --noconfirm btrfs-progs
 mkinitcpio -p linux
-
 
 if [ -d /sys/firmware/efi ]; then
   # We've booted with UEFI
