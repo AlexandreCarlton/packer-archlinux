@@ -9,6 +9,20 @@ The resulting machine has two partitions:
 
 This will set both the root and user passwords to 'vagrant', and the encryption password to 'password'.
 
+## Installing on a real machine
+You can use this project to install Arch on a physical computer too. After jumping into the virtual console:
+
+ - Connect to the internet (`systemctl restart dhcpcd` on ethernet, or `wifi-menu` for wireless).
+ - Install git (which will require a `pacman -Syy` to update the database).
+ - Clone this repo recursively.
+ - Change into `http`.
+ - Run `install.sh`, providing the device you want to provision if it isn't the default (`/dev/sda`).
+ - After the system has rebooted, change into `ansible` and run the relevant playbook with `ansible-playbook -i inventory <machine>.yml`.
+
+### Helpful links
+
+ - [Rfkill issues on Lenovo T420 whilst running connman and wpa_supplicant](https://ianweatherhogg.com/tech/2015-08-05-rfkill-connman-enable-wifi.html)
+
 ## Upgrading
 To use newer ISO files, you'll have to edit:
 
