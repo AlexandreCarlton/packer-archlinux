@@ -6,6 +6,8 @@
 set -e # Stop on first error
 set -x # Show what we're executing
 
+DEVICE="${1:-/dev/sda}"
+
 # Ensure system clock is accurate.
 timedatectl set-ntp true
 
@@ -17,7 +19,7 @@ pacman --sync --refresh --refresh
 pacman --sync --noconfirm reflector
 reflector --protocol https --number 20 --sort rate --save /etc/pacman.d/mirrorlist
 
-/bin/sh ./partition.sh
+/bin/sh ./partition.sh "${DEVICE}"
 
 pacstrap /mnt base base-devel
 

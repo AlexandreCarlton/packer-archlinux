@@ -2,9 +2,7 @@
 
 # Basic partitioning; tweak later.
 
-# Can get name from lsblk --nodeps --noheadings --output NAME
-# Should probably export these in install.sh
-DEVICE='/dev/sda'
+DEVICE="${1:-/dev/sda}"
 boot_partition="${DEVICE}1"
 root_partition="${DEVICE}2"
 
