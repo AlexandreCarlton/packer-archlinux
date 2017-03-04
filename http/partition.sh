@@ -8,11 +8,14 @@ DEVICE='/dev/sda'
 boot_partition="${DEVICE}1"
 root_partition="${DEVICE}2"
 
-# Note we are doing this for a BIOS system; for UEFI we'd have "mkpart ESP fat32"
 parted "${DEVICE}" --script mklabel gpt
-parted "${DEVICE}" --script --align=optimal mkpart primary ext2 1MiB 257MiB
+if [ -d /sys/firmware/efi ]; then
+  parted "${DEVICE}" --script --align=optimal mkpart primary ext2 1MiB 1GiB
+else
+  parted "${DEVICE}" --script --align=optimal mkpart ESP fat32 1MiB 1GiB
+fi
 parted "${DEVICE}" --script set 1 boot on
-parted "${DEVICE}" --script --align=optimal mkpart primary btrfs 257MiB 100%
+parted "${DEVICE}" --script --align=optimal mkpart primary btrfs 1GiB 100%
 
 # Note: We must have:
 #  - 'keyboard' and 'encrypt' hooks in mkinitcpio.conf

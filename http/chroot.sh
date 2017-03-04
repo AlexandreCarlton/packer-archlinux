@@ -17,13 +17,23 @@ sed --in-place 's/block filesystems keyboard/keyboard block encrypt filesystems/
 pacman --sync --noconfirm btrfs-progs
 mkinitcpio -p linux
 
-# Syslinux (since we're using BIOS)
-# We deploy our own config via Ansible... we'd need to know the root uid, though - /dev/disk/by-label?
-pacman --sync --noconfirm syslinux gptfdisk
-syslinux-install_update -i -a -m
-sed --in-place 's|root=/dev/sda3|cryptdevice=/dev/sda2:cryptroot root=/dev/mapper/cryptroot|' /boot/syslinux/syslinux.cfg
 
-# If we were in UEFI we'd do:
-# bootctl --path=/boot install
-# sed --in-place 's|^options.*|options cryptdevice=/dev/sda2:cryptroot root=/dev/mapper/cryptroot rw|' /boot/loader/entries/arch.conf
-pacman --remove --cascade --recursive --nosave --noconfirm gptfdisk
+if [ -d /sys/firmware/efi ]; then
+  # We've booted with UEFI
+  bootctl --path=/boot install
+
+  echo 'default arch' > /boot/loader/loader.conf
+  echo 'timeout 3' >> /boot/loader/loader.conf
+
+  echo 'title Arch Linux' > /boot/loader/entries/arch.conf
+  echo 'linux /vmlinuz-linux' >> /boot/loader/entries/arch.conf
+  echo 'initrd /initramfs-linux.img' >> /boot/loader/entries/arch.conf
+  echo 'options cryptdevice=/dev/sda2:cryptroot root=/dev/mapper/cryptroot' >> /boot/loader/entries/arch.conf
+else
+  # We've booted with BIOS
+  pacman --sync --noconfirm syslinux gptfdisk
+  syslinux-install_update -i -a -m
+  # TODO: Use UUID; labels aren't accessible if they're in an encrypted partition
+  sed --in-place 's|root=/dev/sda3|cryptdevice=/dev/sda2:cryptroot root=/dev/mapper/cryptroot|' /boot/syslinux/syslinux.cfg
+  pacman --remove --cascade --recursive --nosave --noconfirm gptfdisk
+fi
