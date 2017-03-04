@@ -28,7 +28,7 @@ genfstab -t UUID /mnt >> /mnt/etc/fstab
 
 arch-chroot /mnt /bin/bash < ./chroot.sh
 
-if greq --quiet 'hypervisor' /proc/cpuinfo; then
+if grep --quiet 'hypervisor' /proc/cpuinfo; then
   arch-chroot /mnt /bin/bash < ./packer.sh
 fi
 

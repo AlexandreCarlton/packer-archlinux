@@ -6,7 +6,7 @@ set -x
 # This is so that packer can complete a build and still have encryption ready.
 # It is the default key for crypt and so does not need to be specified in syslinux.cfg.
 # We'll have to remove this later.
-if greq --quiet 'hypervisor' /proc/cpuinfo; then
+if grep --quiet 'hypervisor' /proc/cpuinfo; then
   printf 'password' > /crypto_keyfile.bin
   printf 'password' | cryptsetup luksAddKey /dev/sda2 /crypto_keyfile.bin
   sed --in-place 's|FILES=""|FILES="/crypto_keyfile.bin"|' /etc/mkinitcpio.conf
