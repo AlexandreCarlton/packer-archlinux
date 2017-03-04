@@ -24,7 +24,7 @@ reflector --protocol https --number 20 --sort rate --save /etc/pacman.d/mirrorli
 pacstrap /mnt base base-devel
 
 # Generate an fstab file with labels (not UUIDs)
-genfstab -t LABEL /mnt >> /mnt/etc/fstab
+genfstab -t UUID /mnt >> /mnt/etc/fstab
 
 arch-chroot /mnt /bin/bash < ./chroot.sh
 
