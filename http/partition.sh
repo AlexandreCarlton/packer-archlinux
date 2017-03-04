@@ -27,7 +27,7 @@ printf 'password' | cryptsetup open "${root_partition}" cryptroot
 # If UEFI we'd use
 # mkfs.fat -F 32 -n 'boot' "${boot_partition}"
 mkfs.ext2 -L 'boot' "${boot_partition}"
-mkfs.ext4 -L 'root' /dev/mapper/cryptroot
+mkfs.btrfs -L 'root' /dev/mapper/cryptroot
 
 # TODO: mount -o defaults,noatime,nodev,nosuid,(noexec)
 mount /dev/mapper/cryptroot /mnt
