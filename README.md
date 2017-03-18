@@ -1,5 +1,8 @@
 # packer-archlinux
 
+[![Build Status](https://travis-ci.org/AlexandreCarlton/packer-archlinux.svg?branch=master)](https://travis-ci.org/AlexandreCarlton/packer-archlinux)
+[![Build status](https://ci.appveyor.com/api/projects/status/s7tcpanctduykfpn?svg=true)](https://ci.appveyor.com/project/AlexandreCarlton/packer-archlinux)
+
 Packer template to deploy and provision my Arch Linux setup.
 
 The resulting machine has two partitions:

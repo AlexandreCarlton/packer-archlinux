@@ -20,4 +20,5 @@ install:
 
 build_script:
   - set PACKER_CACHE_DIR=%cd%\packer_cache
-  - packer build archlinux.json
+  - packer validate archlinux.json
+  # - packer build archlinux.json

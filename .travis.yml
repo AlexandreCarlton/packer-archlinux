@@ -18,7 +18,8 @@ install:
   - which packer
 
 script:
-  - packer build archlinux.json
+  - packer validate archlinux.json
+  # - packer build archlinux.json
 
 addons:
   apt:
