@@ -1,6 +1,13 @@
 #!/bin/sh
 
-# Basic partitioning; tweak later.
+# A partitioning set up for:
+# - boot
+# - swap
+# - root (a btrfs subvolume)
+#   - @ (/)
+#   - @home (/home)
+#   - @var (/var)
+#   - @snapshots (/.snapshots)
 
 DEVICE="${1:-/dev/sda}"
 boot_partition="${DEVICE}1"
@@ -35,6 +42,19 @@ mkswap "${swap_partition}"
 swapon "${swap_partition}"
 mkfs.btrfs -L 'root' /dev/mapper/cryptroot
 
+# Create top level subvolumes
 mount /dev/mapper/cryptroot /mnt
-mkdir /mnt/boot
-mount "${boot_partition}" /mnt/boot
+btrfs subvolume create /mnt/@
+btrfs subvolume create /mnt/@home
+btrfs subvolume create /mnt/@var
+btrfs subvolume create /mnt/@snaphots
+umount /mnt
+
+# Mount the subvolumes
+# TODO: /sys/block/sda/queue/rotational = 1 if using HDD, 0 if SSD.
+                         mount -o compress=lzo,noatime,subvol=@          /dev/mapper/cryptroot /mnt
+mkdir /mnt/home       && mount -o compress=lzo,noatime,subvol=@home      /dev/mapper/cryptroot /mnt/home
+mkdir /mnt/var        && mount -o compress=lzo,noatime,subvol=@var       /dev/mapper/cryptroot /mnt/var
+mkdir /mnt/.snapshots && mount -o compress=lzo,noatime,subvol=@snapshots /dev/mapper/cryptroot /mnt/.snapshots
+# Mount /boot (non-btrfs)
+mkdir /mnt/boot       && mount                                           "${boot_partition}"   /mnt/boot
