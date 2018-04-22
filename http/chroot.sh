@@ -2,13 +2,15 @@
 set -e
 set -x
 
+ROOT_PARTITION=/dev/sda3
+
 # Add key to automatically unlock the partition by sticking it in rootfs
 # This is so that packer can complete a build and still have encryption ready.
 # It is the default key for crypt and so does not need to be specified in syslinux.cfg.
 # We'll have to remove this later.
 if grep --quiet 'hypervisor' /proc/cpuinfo; then
   printf 'password' > /crypto_keyfile.bin
-  printf 'password' | cryptsetup luksAddKey /dev/sda2 /crypto_keyfile.bin
+  printf 'password' | cryptsetup luksAddKey "${ROOT_PARTITION}" /crypto_keyfile.bin
   sed --in-place 's|FILES=""|FILES="/crypto_keyfile.bin"|' /etc/mkinitcpio.conf
 fi
 
@@ -36,6 +38,6 @@ else
   pacman --sync --noconfirm syslinux gptfdisk
   syslinux-install_update -i -a -m
   # TODO: Use UUID; labels aren't accessible if they're in an encrypted partition
-  sed --in-place 's|root=/dev/sda3|cryptdevice=/dev/sda2:cryptroot root=/dev/mapper/cryptroot|' /boot/syslinux/syslinux.cfg
+  sed --in-place "s|root=/dev/sda3|cryptdevice=${ROOT_PARTITION}:cryptroot root=/dev/mapper/cryptroot|" /boot/syslinux/syslinux.cfg
   pacman --remove --cascade --recursive --nosave --noconfirm gptfdisk
 fi
