@@ -47,7 +47,6 @@ mount /dev/mapper/cryptroot /mnt
 btrfs subvolume create /mnt/@
 btrfs subvolume create /mnt/@home
 btrfs subvolume create /mnt/@var
-btrfs subvolume create /mnt/@snaphots
 umount /mnt
 
 # Mount the subvolumes
@@ -55,6 +54,5 @@ umount /mnt
                          mount -o compress=lzo,noatime,subvol=@          /dev/mapper/cryptroot /mnt
 mkdir /mnt/home       && mount -o compress=lzo,noatime,subvol=@home      /dev/mapper/cryptroot /mnt/home
 mkdir /mnt/var        && mount -o compress=lzo,noatime,subvol=@var       /dev/mapper/cryptroot /mnt/var
-mkdir /mnt/.snapshots && mount -o compress=lzo,noatime,subvol=@snapshots /dev/mapper/cryptroot /mnt/.snapshots
 # Mount /boot (non-btrfs)
 mkdir /mnt/boot       && mount                                           "${boot_partition}"   /mnt/boot
