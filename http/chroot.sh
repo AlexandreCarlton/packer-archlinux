@@ -32,7 +32,7 @@ if [ -d /sys/firmware/efi ]; then
   echo 'title Arch Linux' > /boot/loader/entries/arch.conf
   echo 'linux /vmlinuz-linux' >> /boot/loader/entries/arch.conf
   echo 'initrd /initramfs-linux.img' >> /boot/loader/entries/arch.conf
-  echo 'options cryptdevice=/dev/sda3:cryptroot root=/dev/mapper/cryptroot' >> /boot/loader/entries/arch.conf
+  echo "options cryptdevice=${ROOT_PARTITION}:cryptroot root=/dev/mapper/cryptroot" >> /boot/loader/entries/arch.conf
 else
   # We've booted with BIOS
   pacman --sync --noconfirm syslinux gptfdisk
