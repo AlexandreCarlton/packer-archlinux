@@ -11,7 +11,7 @@ ROOT_PARTITION=/dev/sda3
 if grep --quiet 'hypervisor' /proc/cpuinfo; then
   printf 'password' > /crypto_keyfile.bin
   printf 'password' | cryptsetup luksAddKey "${ROOT_PARTITION}" /crypto_keyfile.bin
-  sed --in-place '/FILES=.*/a FILES+=" /crypto_keyfile.bin"' /etc/mkinitcpio.conf
+  sed --in-place '/FILES=.*/a FILES="/crypto_keyfile.bin"' /etc/mkinitcpio.conf
 fi
 
 # Insert encrypt hook, and place keyboard hook before this (so that we can type the password)
