@@ -46,13 +46,19 @@ mkfs.btrfs -L 'root' /dev/mapper/cryptroot
 mount /dev/mapper/cryptroot /mnt
 btrfs subvolume create /mnt/@
 btrfs subvolume create /mnt/@home
-btrfs subvolume create /mnt/@var
+
+# Set @ to be the default subvolume for root.
+# Snapper (if used) will later manage the default subvolume for us.
+btrfs subvolume set-default /mnt/@
+
 umount /mnt
 
 # Mount the subvolumes
 # TODO: /sys/block/sda/queue/rotational = 1 if using HDD, 0 if SSD.
-                         mount -o compress=lzo,noatime,subvol=@          /dev/mapper/cryptroot /mnt
+
+# Note that when we call genfstab, subvol will be set (and will later be undone by ansible).
+# Regardless, it is worth emphasising that we do not explicitly mount @ to /.
+                         mount -o compress=lzo,noatime                   /dev/mapper/cryptroot /mnt
 mkdir /mnt/home       && mount -o compress=lzo,noatime,subvol=@home      /dev/mapper/cryptroot /mnt/home
-mkdir /mnt/var        && mount -o compress=lzo,noatime,subvol=@var       /dev/mapper/cryptroot /mnt/var
 # Mount /boot (non-btrfs)
 mkdir /mnt/boot       && mount                                           "${boot_partition}"   /mnt/boot
