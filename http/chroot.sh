@@ -11,6 +11,7 @@ ROOT_PARTITION=/dev/sda3
 if grep --quiet 'hypervisor' /proc/cpuinfo; then
   printf 'password' > /crypto_keyfile.bin
   printf 'password' | cryptsetup luksAddKey "${ROOT_PARTITION}" /crypto_keyfile.bin
+  # FILES+=('foo') doesn't seem to work beyond the first invocation :/
   sed --in-place '/FILES=.*/a FILES="/crypto_keyfile.bin"' /etc/mkinitcpio.conf
 fi
 
@@ -26,18 +27,22 @@ if [ -d /sys/firmware/efi ]; then
   # We've booted with UEFI
   bootctl --path=/boot install
 
-  echo 'default arch' > /boot/loader/loader.conf
-  echo 'timeout 3' >> /boot/loader/loader.conf
+  {
+    echo 'default arch'
+    echo 'timeout 3'
+  } > /boot/loader/loader.conf
 
-  echo 'title Arch Linux' > /boot/loader/entries/arch.conf
-  echo 'linux /vmlinuz-linux' >> /boot/loader/entries/arch.conf
-  echo 'initrd /initramfs-linux.img' >> /boot/loader/entries/arch.conf
-  echo "options cryptdevice=${ROOT_PARTITION}:cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@" >> /boot/loader/entries/arch.conf
+  {
+    echo 'title Arch Linux'
+    echo 'linux /vmlinuz-linux'
+    echo 'initrd /initramfs-linux.img'
+    echo "options cryptdevice=${ROOT_PARTITION}:cryptroot root=/dev/mapper/cryptroot"
+  } > /boot/loader/entries/arch.conf
 else
   # We've booted with BIOS
   pacman --sync --noconfirm syslinux gptfdisk
   syslinux-install_update -i -a -m
   # TODO: Use UUID; labels aren't accessible if they're in an encrypted partition
-  sed --in-place "s|root=/dev/sda3|cryptdevice=${ROOT_PARTITION}:cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@|" /boot/syslinux/syslinux.cfg
+  sed --in-place "s|root=/dev/sda3|cryptdevice=${ROOT_PARTITION}:cryptroot root=/dev/mapper/cryptroot|" /boot/syslinux/syslinux.cfg
   pacman --remove --cascade --recursive --nosave --noconfirm gptfdisk
 fi
