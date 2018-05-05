@@ -2,6 +2,11 @@
 
 version: 1.0.{build}
 
+image:
+  # Guarantees that we are using Windows Server 2016,
+  # which (apparently) offers nested 64-bit virtualisation.
+  - Visual Studio 2017
+
 cache:
   - packer_cache
   - C:\ProgramData\chocolatey\bin
@@ -21,4 +26,4 @@ install:
 build_script:
   - set PACKER_CACHE_DIR=%cd%\packer_cache
   - packer validate archlinux.json
-  # - packer build archlinux.json
+  - packer build archlinux.json

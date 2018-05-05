@@ -8,6 +8,7 @@ Packer template to deploy and provision my Arch Linux setup.
 The resulting machine has two partitions:
 
  - A small boot partition
+ - A swap partition
  - An encrypted root partition
 
 This will set both the root and user passwords to 'vagrant', and the encryption password to 'password'.
