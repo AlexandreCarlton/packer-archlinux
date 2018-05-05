@@ -2,10 +2,9 @@
 
 version: 1.0.{build}
 
-image:
-  # Guarantees that we are using Windows Server 2016,
-  # which (apparently) offers nested 64-bit virtualisation.
-  - Visual Studio 2017
+# Guarantees that we are using Windows Server 2016,
+# which (apparently) offers nested 64-bit virtualisation.
+image: Visual Studio 2017
 
 cache:
   - packer_cache
@@ -27,8 +26,9 @@ build_script:
   - set PACKER_LOG=1
   - set PACKER_CACHE_DIR=%cd%\packer_cache
   - packer validate archlinux.json
+  # Check if we have VT-X enabled
+  - ps: systeminfo | Select-String -Pattern "Hyper-V Requirements"
   # We don't try to build since we get the following error in VirtualBox:
-  #
   # VT-X/AMD-V hardware acceleration is not available on your system.
   # Your 64-bit guest will fail to detect a 64-bit CPU and will not be able to boot.
   # - packer build archlinux.json
