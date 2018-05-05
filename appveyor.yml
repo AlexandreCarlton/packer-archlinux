@@ -27,4 +27,8 @@ build_script:
   - set PACKER_LOG=1
   - set PACKER_CACHE_DIR=%cd%\packer_cache
   - packer validate archlinux.json
-  - packer build archlinux.json
+  # We don't try to build since we get the following error in VirtualBox:
+  #
+  # VT-X/AMD-V hardware acceleration is not available on your system.
+  # Your 64-bit guest will fail to detect a 64-bit CPU and will not be able to boot.
+  # - packer build archlinux.json
