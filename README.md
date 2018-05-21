@@ -23,6 +23,21 @@ You can use this project to install Arch on a physical computer too. After jumpi
  - Run `install.sh`, providing the device you want to provision if it isn't the default (`/dev/sda`).
  - After the system has rebooted, change into `ansible` and run the relevant playbook with `ansible-playbook -i inventory <machine>.yml`.
 
+### Issues
+I've had a few issues here and there, so I figured I would record some of them
+here and the workarounds used to circumvent them.
+
+### Radeon
+On boot, I kept getting an error message:
+
+```
+[drm:.r600_ring_test [radeon]] *ERROR* radon: ring 0 test failed (scratch(0x8504)=0xCAFEDEAD)
+radeon 000:10:00.0: disabling GPU acceleration
+```
+
+Hopping into the bios and turning off switchable graphics detection and using
+integrated graphics appeared to solve this.
+
 ### Helpful links
 
  - [Rfkill issues on Lenovo T420 whilst running connman and wpa_supplicant](https://ianweatherhogg.com/tech/2015-08-05-rfkill-connman-enable-wifi.html)
