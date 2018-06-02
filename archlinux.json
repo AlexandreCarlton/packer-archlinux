@@ -35,7 +35,7 @@
     }, {
         "type": "ansible-local",
         "extra_arguments": ["-v"],
-        "playbook_file": "ansible/virtual-machine.yml",
+        "playbook_file": "packer.yml",
         "playbook_dir": "ansible",
         "inventory_file": "ansible/inventory"
     }],

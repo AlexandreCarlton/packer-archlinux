@@ -1,0 +1,27 @@
+---
+- hosts: localhost
+  roles:
+    - aura
+    - autologin
+    - bspwm
+    - chromium
+    - c++_development
+    - development
+    - desktop
+    - docker
+    - dotfiles
+    - haskell_development
+    - java_development
+    - javascript_development
+    - python_development
+    - retroarch
+    - snapper
+    - system
+    - user
+    - vagrant
+    - vim_plugins
+    - virtualbox
+    - xorg
+  become: yes
+  vars:
+    system_hostname: porygon
