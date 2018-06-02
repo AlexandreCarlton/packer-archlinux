@@ -3,8 +3,8 @@
         "type": "virtualbox-iso",
         "guest_os_type": "ArchLinux_64",
 
-        "iso_url": "http://mirror.rackspace.com/archlinux/iso/2018.05.01/archlinux-2018.05.01-x86_64.iso",
-        "iso_checksum": "2adf5c728efeea60645d0c42337b033f5a68c506",
+        "iso_url": "http://ftp.iinet.net.au/pub/archlinux/iso/2018.06.01/archlinux-2018.06.01-x86_64.iso",
+        "iso_checksum": "7bf795015e901eae74b030cdd7341f4860b192ec",
         "iso_checksum_type": "sha1",
 
         "headless": true,
