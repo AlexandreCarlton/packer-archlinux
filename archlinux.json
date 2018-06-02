@@ -36,8 +36,29 @@
         "type": "ansible-local",
         "extra_arguments": ["-v"],
         "playbook_file": "packer.yml",
-        "playbook_dir": "ansible",
-        "inventory_file": "ansible/inventory"
+        "role_paths": [
+            "ansible/roles/aura",
+            "ansible/roles/autologin",
+            "ansible/roles/bspwm",
+            "ansible/roles/chromium",
+            "ansible/roles/c++_development",
+            "ansible/roles/development",
+            "ansible/roles/desktop",
+            "ansible/roles/docker",
+            "ansible/roles/dotfiles",
+            "ansible/roles/haskell_development",
+            "ansible/roles/java_development",
+            "ansible/roles/javascript_development",
+            "ansible/roles/python_development",
+            "ansible/roles/retroarch",
+            "ansible/roles/snapper",
+            "ansible/roles/system",
+            "ansible/roles/user",
+            "ansible/roles/vagrant",
+            "ansible/roles/vim_plugins",
+            "ansible/roles/virtualbox",
+            "ansible/roles/xorg"
+        ]
     }],
 
     "post-processors": [{

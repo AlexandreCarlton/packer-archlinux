@@ -1,5 +1,9 @@
 ---
 - hosts: localhost
+  # Note that these must also be passed into the `role_paths` filed in archlinux.json.
+  # We use this instead of "playbook_dir": "ansible", since `ansible` is a git repository,
+  # and uploading the entirety of its contents wreaks havoc with the git module
+  # since `git ls-remote` does not work as intended when its cwd is inside a git repository.
   roles:
     - aura
     - autologin
