@@ -8,7 +8,7 @@ language: generic
 env:
   global:
     - PACKER_LOG=1
-    - PACKER_VERSION='0.12.2'
+    - PACKER_VERSION='1.2.3'
     - PACKER_CACHE_DIR="${HOME}/.cache"
 
 install:
@@ -19,6 +19,8 @@ install:
 
 script:
   - packer validate archlinux.json
+  # Check that nested Virtualisation is available.
+  # - LC_ALL=C lscpu | grep Virtualization
   # - packer build archlinux.json
 
 addons:
