@@ -8,6 +8,13 @@ build/archlinux.box:
 
 vagrant-add: build/archlinux.box
 	vagrant box add --name $(VAGRANT_BOX_NAME) build/archlinux.box
+.PHONY: vagrant-add
 
 vagrant-rm:
 	vagrant box remove $(VAGRANT_BOX_NAME)
+.PHONY: vagrant-rm
+
+clean:
+	rm -rf build
+	rm -rf output-virtualbox-iso
+.PHONY: clean
