@@ -37,14 +37,7 @@
         "extra_arguments": ["-v"],
         "playbook_file": "ansible/virtual-machine.yml",
         "playbook_dir": "ansible",
-        "inventory_file": "ansible/inventory",
-        "role_paths": [
-            "ansible/roles/system",
-            "ansible/roles/user",
-            "ansible/roles/development",
-            "ansible/roles/desktop",
-            "ansible/roles/vagrant"
-        ]
+        "inventory_file": "ansible/inventory"
     }],
 
     "post-processors": [{
