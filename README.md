@@ -28,11 +28,11 @@ I've had a few issues here and there, so I figured I would record some of them
 here and the workarounds used to circumvent them.
 
 ### Radeon
-On boot, I kept getting an error message:
+On boot, I kept getting an error message similar to:
 
 ```
-[drm:.r600_ring_test [radeon]] *ERROR* radon: ring 0 test failed (scratch(0x8504)=0xCAFEDEAD)
-radeon 000:10:00.0: disabling GPU acceleration
+[    1.000000] [drm:.r600_ring_test [radeon]] *ERROR* radon: ring 0 test failed (scratch(0x8504)=0xCAFEDEAD)
+[    1.000000] radeon 000:10:00.0: disabling GPU acceleration
 ```
 
 Hopping into the bios and turning off switchable graphics detection and using
@@ -48,7 +48,18 @@ To use newer ISO files, you'll have to edit:
  - `iso_url`, pointing to a new url
  - `iso_checksum`, found on the [Downloads](https://www.archlinux.org/download/) page, under "Checksum"
 
-## Why are your builds failing in CI?
+## Rolling back
+If you've borked your system for whatever reason, simply find the snapshot you
+wanted to revert to and in your bootflags go:
 
-Both Travis CI and AppVeyor do not run virtual machine workers with VT-X enabled.
-This prevents the launching of 64-bit virtual machines inside the workers, so these builds will inevitably fail.
+    rootflags=subvol=@/.snapshots/<number>/snapshot
+
+And you'll boot into that snapshot.
+This can be made into a new, default snapshot with `snapper rollback`.
+
+## Testing in CI
+Both Travis CI and AppVeyor do not run virtual machine workers with VT-X
+enabled.
+This prevents the launching of 64-bit virtual machines inside the workers, so
+we are unable to test an actual build to see if it works; at best, we can
+validate the `archlinux.json` file.
