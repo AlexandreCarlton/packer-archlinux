@@ -15,6 +15,7 @@
     - docker
     - dotfiles
     - haskell_development
+    - intel
     - java_development
     - javascript_development
     - python_development

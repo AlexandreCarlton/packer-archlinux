@@ -16,12 +16,34 @@ This will set both the root and user passwords to 'vagrant', and the encryption 
 ## Installing on a real machine
 You can use this project to install Arch on a physical computer too. After jumping into the virtual console:
 
- - Connect to the internet (`systemctl restart dhcpcd` on ethernet, or `wifi-menu` for wireless).
- - Install git (which will require a `pacman -Syy` to update the database).
- - Clone this repo recursively.
- - Change into `http`.
- - Run `install.sh`, providing the device you want to provision if it isn't the default (`/dev/sda`).
- - After the system has rebooted, change into `ansible` and run the relevant playbook with `ansible-playbook -i inventory <machine>.yml`.
+Install a basic archlinux set up:
+
+```bash
+$ systemctl restart dhcpcd # ethernet
+$ wifi-menu # wi-fi
+$ pacman -Syy
+$ pacman -S git
+$ git clone --recursive https://github.com/AlexandreCarlton/packer-archlinux.git
+$ cd packer-archlinux/http
+$ ./install.sh /dev/sda
+```
+
+This will reboot the system.
+Pull down the `ansible-archlinux` repository and run the playbook you desire:
+
+```bash
+$ git clone --recursive https://github.com/AlexandreCarlton/ansible-archlinux.git
+$ cd ansible-archlinux
+$ ansible-playbook --connection=local <machine>.yml
+```
+
+Now that your system is set up, remember to change your passwords:
+```bash
+$ sudo cryptsetup --verify-passphrase --key-slot=0 luksChangeKey /dev/sda3
+$ passwd
+```
+
+(Thought: what if we just enabled `sshd`, and provisioned remotely?)
 
 ### Issues
 I've had a few issues here and there, so I figured I would record some of them

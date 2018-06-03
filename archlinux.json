@@ -47,6 +47,7 @@
             "ansible/roles/docker",
             "ansible/roles/dotfiles",
             "ansible/roles/haskell_development",
+            "ansible/roles/intel",
             "ansible/roles/java_development",
             "ansible/roles/javascript_development",
             "ansible/roles/python_development",
