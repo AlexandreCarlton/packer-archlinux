@@ -10,9 +10,17 @@
 #   - @snapshots (/.snapshots)
 
 DEVICE="${1:-/dev/sda}"
-boot_partition="${DEVICE}1"
-swap_partition="${DEVICE}2"
-root_partition="${DEVICE}3"
+
+if printf '%s' "${DEVICE}" | grep --quiet '[0-9]$'; then
+  # Devices with trailing digits tend to have 'p<i>' as the partition suffix to avoid confusion.
+  boot_partition="${DEVICE}p1"
+  swap_partition="${DEVICE}p2"
+  root_partition="${DEVICE}p3"
+else
+  boot_partition="${DEVICE}1"
+  swap_partition="${DEVICE}2"
+  root_partition="${DEVICE}3"
+fi
 
 parted "${DEVICE}" --script mklabel gpt
 if [ -d /sys/firmware/efi ]; then
