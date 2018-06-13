@@ -31,7 +31,8 @@ pacstrap /mnt base base-devel
 # Generate an fstab file with UUID (this can be accessed via encryption).
 genfstab -t UUID /mnt >> /mnt/etc/fstab
 
-arch-chroot /mnt /bin/bash < ./chroot.sh
+# TODO: This should pass in the root partition.
+arch-chroot /mnt /bin/bash < ./chroot.sh "${DEVICE}"
 
 if grep --quiet 'hypervisor' /proc/cpuinfo; then
   arch-chroot /mnt /bin/bash < ./packer.sh

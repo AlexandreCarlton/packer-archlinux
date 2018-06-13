@@ -2,7 +2,15 @@
 set -e
 set -x
 
-ROOT_PARTITION=/dev/sda3
+# TODO: This should take in the root partition instead of just the device
+DEVICE="$1"
+
+if printf '%s' "${DEVICE}" | grep --quiet '[0-9]$'; then
+  # Devices with trailing digits tend to have 'p<i>' as the partition suffix to avoid confusion.
+  root_partition="${DEVICE}p3"
+else
+  root_partition="${DEVICE}3"
+fi
 
 # Add key to automatically unlock the partition by sticking it in rootfs
 # This is so that packer can complete a build and still have encryption ready.
@@ -10,7 +18,7 @@ ROOT_PARTITION=/dev/sda3
 # We'll have to remove this later.
 if grep --quiet 'hypervisor' /proc/cpuinfo; then
   printf 'password' > /crypto_keyfile.bin
-  printf 'password' | cryptsetup luksAddKey "${ROOT_PARTITION}" /crypto_keyfile.bin
+  printf 'password' | cryptsetup luksAddKey "${root_partition}" /crypto_keyfile.bin
   # FILES+=('foo') doesn't seem to work beyond the first invocation :/
   sed --in-place '/FILES=.*/a FILES="/crypto_keyfile.bin"' /etc/mkinitcpio.conf
 fi
@@ -36,13 +44,13 @@ if [ -d /sys/firmware/efi ]; then
     echo 'title Arch Linux'
     echo 'linux /vmlinuz-linux'
     echo 'initrd /initramfs-linux.img'
-    echo "options cryptdevice=${ROOT_PARTITION}:cryptroot root=/dev/mapper/cryptroot"
+    echo "options cryptdevice=${root_partition}:cryptroot root=/dev/mapper/cryptroot"
   } > /boot/loader/entries/arch.conf
 else
   # We've booted with BIOS
   pacman --sync --noconfirm syslinux gptfdisk
   syslinux-install_update -i -a -m
   # TODO: Use UUID; labels aren't accessible if they're in an encrypted partition
-  sed --in-place "s|root=/dev/sda3|cryptdevice=${ROOT_PARTITION}:cryptroot root=/dev/mapper/cryptroot|" /boot/syslinux/syslinux.cfg
+  sed --in-place "s|root=/dev/sda3|cryptdevice=${root_partition}:cryptroot root=/dev/mapper/cryptroot|" /boot/syslinux/syslinux.cfg
   pacman --remove --cascade --recursive --nosave --noconfirm gptfdisk
 fi
