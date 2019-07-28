@@ -85,3 +85,18 @@ enabled.
 This prevents the launching of 64-bit virtual machines inside the workers, so
 we are unable to test an actual build to see if it works; at best, we can
 validate the `archlinux.json` file.
+
+## Development
+Building the entire box from scratch takes a long time, especially if you want
+to test a small role. For this reason, you can build a minimal ArchLinux box
+with:
+
+```
+packer build archlinux-base.json
+```
+
+You can then build a new box based on this with:
+```
+packer build -on-error=ask archlinux-development.json
+```
+If a step fails, the VM will remain present so that it can be debugged.

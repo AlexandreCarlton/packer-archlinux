@@ -1,0 +1,33 @@
+{
+    "builders": [{
+        "type": "virtualbox-ovf",
+
+        "source_path": "output-virtualbox-iso/packer-virtualbox-iso-1564046948.ovf",
+
+        "headless": false,
+        "http_directory": "http",
+
+        "guest_additions_mode": "disable",
+
+        "boot_wait": "5s",
+
+        "ssh_username": "vagrant",
+        "ssh_password": "vagrant",
+
+        "shutdown_command": "sudo systemctl poweroff"
+    }],
+
+    "provisioners": [{
+        "type": "ansible-local",
+        "inventory_file": "ansible/inventory",
+  	    "extra_arguments": ["-vvv"],
+  	    "playbook_file": "packer-development.yml",
+  	    "playbook_dir": "ansible"
+    }],
+    "post-processors": [{
+        "type": "vagrant",
+        "compression_level": 0,
+        "output": "build/archlinux-development.box",
+        "vagrantfile_template": "Vagrantfile"
+    }]
+}

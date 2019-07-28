@@ -1,0 +1,7 @@
+---
+- hosts: localhost
+  # The minimal set of roles needed to be able to provision a new instance.
+  roles:
+    - user
+    - vagrant
+  become: yes

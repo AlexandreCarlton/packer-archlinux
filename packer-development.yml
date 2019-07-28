@@ -1,0 +1,32 @@
+---
+- hosts: localhost
+  # The minimal set of roles needed to be able to provision a new instance.
+  roles:
+    - aura
+    - autologin
+    - bspwm
+    - c++_development
+    - chromium
+    - desktop
+    - development
+    - docker
+    - dotfiles
+    - dropbox
+    - haskell_development
+    - intel
+    - java_development
+    - javascript_development
+    - laptop
+    - python_development
+    - radeon
+    - retroarch
+    - snapper
+    - system
+    - systemd-boot
+    - thinkpad
+    - user
+    - vagrant
+    - vim_plugins
+    - virtualbox
+    - xorg
+  become: yes

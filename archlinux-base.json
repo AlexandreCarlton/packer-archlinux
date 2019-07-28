@@ -1,0 +1,44 @@
+{
+    "builders": [{
+        "type": "virtualbox-iso",
+        "guest_os_type": "ArchLinux_64",
+
+        "iso_url": "http://ftp.iinet.net.au/pub/archlinux/iso/2019.07.01/archlinux-2019.07.01-x86_64.iso",
+        "iso_checksum": "f4d5fe8d7da2fca505c49b86b4e76d3392d90d13",
+        "iso_checksum_type": "sha1",
+
+        "headless": false,
+        "http_directory": "http",
+
+        "guest_additions_mode": "disable",
+
+        "boot_wait": "5s",
+        "boot_command": [
+            "<enter><wait10><wait10><wait10>",
+            "/usr/bin/curl -sfSLO http://{{ .HTTPIP }}:{{ .HTTPPort }}/install.sh<enter><wait>",
+            "/usr/bin/curl -sfSLO http://{{ .HTTPIP }}:{{ .HTTPPort }}/chroot.sh<enter><wait>",
+            "/usr/bin/curl -sfSLO http://{{ .HTTPIP }}:{{ .HTTPPort }}/packer.sh<enter><wait>",
+            "/usr/bin/curl -sfSLO http://{{ .HTTPIP }}:{{ .HTTPPort }}/partition.sh<enter><wait>",
+            "/bin/sh ./install.sh<enter>"
+        ],
+
+        "ssh_username": "vagrant",
+        "ssh_password": "vagrant",
+        "ssh_timeout": "20m",
+
+        "shutdown_command": "sudo systemctl poweroff"
+    }],
+
+    "provisioners": [{
+        "type": "shell",
+        "inline": ["sudo pacman --sync --noconfirm --needed ansible"]
+    }, {
+ 	      "type": "ansible-local",
+        "inventory_file": "ansible/inventory",
+ 	      "extra_arguments": ["-v"],
+ 	      "playbook_file": "packer-base.yml",
+ 	      "playbook_dir": "ansible"
+    }]
+}
+
+
