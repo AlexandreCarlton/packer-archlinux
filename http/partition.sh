@@ -22,6 +22,10 @@ else
   root_partition="${DEVICE}3"
 fi
 
+# Calculate swap size by ceil(sqrt(memory)).
+memory=$(free --giga | awk '$1 == "Mem:" { print $2 }')
+swap_size=$(echo "scale=10; swap=(sqrt(${memory}) + 0.5); scale=0; swap/1 " | bc -l)
+
 parted "${DEVICE}" --script mklabel gpt
 if [ -d /sys/firmware/efi ]; then
   parted "${DEVICE}" --script --align=optimal mkpart ESP fat32 1MiB 1GiB
@@ -29,8 +33,8 @@ else
   parted "${DEVICE}" --script --align=optimal mkpart primary ext2 1MiB 1GiB
 fi
 parted "${DEVICE}" --script set 1 boot on
-parted "${DEVICE}" --script --align=optimal mkpart primary linux-swap 1GiB 5GiB
-parted "${DEVICE}" --script --align=optimal mkpart primary btrfs 5GiB 100%
+parted "${DEVICE}" --script --align=optimal mkpart primary linux-swap 1GiB $((swap_size + 1))GiB
+parted "${DEVICE}" --script --align=optimal mkpart primary btrfs $((swap_size + 1))GiB 100%
 
 # Note: We must have:
 #  - 'keyboard' and 'encrypt' hooks in mkinitcpio.conf
