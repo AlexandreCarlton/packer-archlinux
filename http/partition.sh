@@ -22,9 +22,12 @@ else
   root_partition="${DEVICE}3"
 fi
 
-# Calculate swap size by ceil(sqrt(memory)).
+# Calculate swap size by max(ceil(sqrt(memory)), 1).
 memory=$(free --giga | awk '$1 == "Mem:" { print $2 }')
 swap_size=$(echo "scale=10; swap=(sqrt(${memory}) + 0.5); scale=0; swap/1 " | bc -l)
+if [ "$swap_size" -lt 1 ]; then
+  swap_size=1
+fi
 
 parted "${DEVICE}" --script mklabel gpt
 if [ -d /sys/firmware/efi ]; then
