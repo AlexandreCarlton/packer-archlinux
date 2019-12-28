@@ -60,7 +60,6 @@ mkfs.btrfs -L 'root' /dev/mapper/cryptroot
 # Create top level subvolumes
 mount /dev/mapper/cryptroot /mnt
 btrfs subvolume create /mnt/@
-# TODO: Add more for volumes we don't want to track, e.g. caches.
 
 # Set @ to be the default subvolume for root.
 # Snapper (if used) will later manage the default subvolume for us.

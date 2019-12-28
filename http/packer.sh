@@ -29,7 +29,6 @@ SUDOERS
 chmod 0440 /etc/sudoers.d/vagrant
 
 # Have to enable these services so we can ssh in and execute vagrant operations.
-pacman --sync --needed --noconfirm openssh
-systemctl daemon-reload
+pacman --sync --needed --noconfirm openssh dhcpcd
 systemctl enable sshd
 systemctl enable dhcpcd

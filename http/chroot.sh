@@ -12,6 +12,9 @@ else
   root_partition="${DEVICE}3"
 fi
 
+# Ensure configuration file /etc/mkinitcpio.conf is present.
+pacman --sync --noconfirm mkinitcpio
+
 # Add key to automatically unlock the partition by sticking it in rootfs
 # This is so that packer can complete a build and still have encryption ready.
 # It is the default key for crypt and so does not need to be specified in syslinux.cfg.
@@ -29,6 +32,8 @@ fi
 sed --in-place 's/block filesystems keyboard/keyboard block encrypt filesystems/' /etc/mkinitcpio.conf
 # mkinitcpio complains that fsck.btrfs without this.
 pacman --sync --noconfirm btrfs-progs
+# we need the linux preset
+pacman --sync --noconfirm linux
 mkinitcpio -p linux
 
 if [ -d /sys/firmware/efi ]; then
