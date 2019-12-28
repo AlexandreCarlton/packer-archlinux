@@ -14,12 +14,13 @@
 
         "boot_wait": "5s",
         "boot_command": [
-            "<enter><wait10><wait10><wait10>",
-            "/usr/bin/curl -sfSLO http://{{ .HTTPIP }}:{{ .HTTPPort }}/install.sh<enter><wait>",
-            "/usr/bin/curl -sfSLO http://{{ .HTTPIP }}:{{ .HTTPPort }}/chroot.sh<enter><wait>",
-            "/usr/bin/curl -sfSLO http://{{ .HTTPIP }}:{{ .HTTPPort }}/packer.sh<enter><wait>",
-            "/usr/bin/curl -sfSLO http://{{ .HTTPIP }}:{{ .HTTPPort }}/partition.sh<enter><wait>",
-            "/bin/sh ./install.sh<enter>"
+            "<enter><wait10><wait10><wait10><enter>",
+            "curl -sfSLO http://{{ .HTTPIP }}:{{ .HTTPPort }}/install.sh<enter><wait>",
+            "curl -sfSLO http://{{ .HTTPIP }}:{{ .HTTPPort }}/chroot.sh<enter><wait>",
+            "curl -sfSLO http://{{ .HTTPIP }}:{{ .HTTPPort }}/packer.sh<enter><wait>",
+            "curl -sfSLO http://{{ .HTTPIP }}:{{ .HTTPPort }}/partition.sh<enter><wait>",
+            "chmod +x *.sh<enter>",
+            "./install.sh<enter>"
         ],
 
         "ssh_username": "vagrant",
