@@ -24,18 +24,21 @@ pacman --sync --refresh --refresh
 pacman --sync --noconfirm reflector
 reflector --protocol https --number 20 --sort rate --save /etc/pacman.d/mirrorlist
 
-/bin/sh ./partition.sh "${DEVICE}"
+./partition.sh "${DEVICE}"
 
 pacstrap /mnt base base-devel
 
 # Generate an fstab file with UUID (this can be accessed via encryption).
 genfstab -t UUID /mnt >> /mnt/etc/fstab
 
-# TODO: This should pass in the root partition.
-arch-chroot /mnt /bin/bash < ./chroot.sh "${DEVICE}"
+cp chroot.sh /mnt/
+arch-chroot /mnt /chroot.sh "${DEVICE}"
+rm /mnt/chroot.sh
 
 if grep --quiet 'hypervisor' /proc/cpuinfo; then
-  arch-chroot /mnt /bin/bash < ./packer.sh
+  cp packer.sh /mnt/
+  arch-chroot /mnt /packer.sh
+  rm /mnt/packer.sh
 fi
 
 umount -R /mnt
