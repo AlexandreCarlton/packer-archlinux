@@ -60,3 +60,6 @@ else
   sed --in-place "s|root=/dev/sda3|cryptdevice=${root_partition}:cryptroot root=/dev/mapper/cryptroot|" /boot/syslinux/syslinux.cfg
   pacman --remove --cascade --recursive --nosave --noconfirm gptfdisk
 fi
+
+# Arch doesn't allow password-less root by default; so we change this so we can log in later.
+echo 'root:password' | chpasswd
