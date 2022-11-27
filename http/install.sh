@@ -6,7 +6,7 @@
 set -e
 set -x
 
-DEVICE="${1:-/dev/sda}"
+DEVICE="${1:?Provide a device name (e.g. /dev/sda or /dev/nvme0n1)}"
 
 # Ensure system clock is accurate.
 timedatectl set-ntp true
