@@ -29,7 +29,8 @@ fi
 # Insert encrypt hook, and place keyboard hook before this (so that we can type the password)
 # We don't need keymap because we're not using a foreign keyboard layout.
 # This will be replaced by Ansible's mkinitcpio.conf
-sed --in-place 's/block filesystems keyboard/keyboard block encrypt filesystems/' /etc/mkinitcpio.conf
+# TODO: Make this less fragile; if this doesn't succeed then we can't unlock the filesystem.
+sed --in-place 's/block filesystems/block encrypt filesystems/' /etc/mkinitcpio.conf
 # mkinitcpio complains that fsck.btrfs without this.
 pacman --sync --noconfirm btrfs-progs
 # we need the linux preset
