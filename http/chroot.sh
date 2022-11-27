@@ -61,5 +61,8 @@ else
   pacman --remove --cascade --recursive --nosave --noconfirm gptfdisk
 fi
 
+# Ensure we can hit the internet post-boot.
+pacman --sync --noconfirm iwd
+
 # Arch doesn't allow password-less root by default; so we change this so we can log in later.
 echo 'root:password' | chpasswd
