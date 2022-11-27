@@ -33,7 +33,7 @@ fi
 sed --in-place 's/block filesystems/block encrypt filesystems/' /etc/mkinitcpio.conf
 # mkinitcpio complains that fsck.btrfs without this.
 pacman --sync --noconfirm btrfs-progs
-# we need the linux preset
+# we need the linux preset for mkinitcpio
 pacman --sync --noconfirm linux
 mkinitcpio -p linux
 
@@ -62,7 +62,7 @@ else
 fi
 
 # Ensure we can hit the internet post-boot.
-pacman --sync --noconfirm iwd
+pacman --sync --noconfirm iwd linux-firmware
 
 # Arch doesn't allow password-less root by default; so we change this so we can log in later.
 echo 'root:password' | chpasswd
