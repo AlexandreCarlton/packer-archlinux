@@ -11,18 +11,8 @@ DEVICE="${1:-/dev/sda}"
 # Ensure system clock is accurate.
 timedatectl set-ntp true
 
-# Force synchronisation of package database (so we can install reflector)
+# Force synchronisation of package database (so we can install things later, if necessary).
 pacman --sync --refresh --refresh
-
-# We set this instead of reflector if we're just making a test build (to save on bandwidth).
-# echo 'Server = http://ftp.iinet.net.au/pub/archlinux/$repo/os/$arch' >  /etc/pacman.d/mirrorlist
-# echo 'Server = http://ftp.iinet.net.au/pub/archlinux/$repo/os/$arch' >> /etc/pacman.d/mirrorlist
-# echo 'Server = http://ftp.iinet.net.au/pub/archlinux/$repo/os/$arch' >> /etc/pacman.d/mirrorlist
-
-# Generate a list of the fastest mirrors (takes about a minute)
-# Pacstrap copies this across into our new installation.
-pacman --sync --noconfirm reflector
-reflector --protocol https --number 20 --sort rate --save /etc/pacman.d/mirrorlist
 
 ./partition.sh "${DEVICE}"
 
